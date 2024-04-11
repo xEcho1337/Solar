@@ -1,0 +1,5 @@
+# Displayed when a player fails a check
+alert-message: "&3[Solar] &f%player% &7> &b%check% &cx%vl% &7%verbose%"
+
+# Displayed to a player when he gets kicked because of TransactionOrder
+transaction-order-kick-message: "&cAn error occurred in your connection."

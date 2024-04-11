@@ -1,0 +1,6 @@
+name: Solar
+version: '${project.version}'
+main: net.echo.solar.Solar
+authors: [xEcho1337]
+description: Basic anti-cheat written with PacketEvents
+load: POSTWORLD
