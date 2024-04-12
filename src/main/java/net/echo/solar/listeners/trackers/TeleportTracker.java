@@ -79,8 +79,4 @@ public class TeleportTracker extends AbstractCheck {
             }
         }
     }
-
-    public void addToQueue(TeleportData data) {
-        teleportQueue.add(data);
-    }
 }

@@ -149,8 +149,8 @@ public final class WorldTracker extends AbstractCheck {
         }
     }
 
-    public Column getChunkColumnAt(int chunkX, int chunkY) {
-        long chunkColumnId = getChunkId(chunkX, chunkX);
+    public Column getChunkColumnAt(int chunkX, int chunkZ) {
+        long chunkColumnId = getChunkId(chunkX, chunkZ);
 
         return chunkColumns.get(chunkColumnId);
     }

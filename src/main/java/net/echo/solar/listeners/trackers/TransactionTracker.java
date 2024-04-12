@@ -114,10 +114,6 @@ public class TransactionTracker extends AbstractCheck {
         callbacks.remove(data);
     }
 
-    public AtomicInteger getCurrentTransaction() {
-        return currentTransaction;
-    }
-
     public AtomicInteger getLastReceivedTransaction() {
         return lastReceivedTransaction;
     }
