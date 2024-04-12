@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 
 public class TransactionTracker extends AbstractCheck {
 
+    // Idk maybe do something better for the callbacks
     private final AtomicInteger currentTransaction = new AtomicInteger(0);
     private final AtomicInteger lastReceivedTransaction = new AtomicInteger(0);
     private final Map<TransactionData, List<Consumer<Integer>>> callbacks = new ConcurrentHashMap<>();

@@ -149,13 +149,22 @@ public final class WorldTracker extends AbstractCheck {
         }
     }
 
+    public Column getChunkColumnAt(int chunkX, int chunkY) {
+        long chunkColumnId = getChunkId(chunkX, chunkX);
+
+        return chunkColumns.get(chunkColumnId);
+    }
+
+    public BaseChunk getChunkAt(int chunkX, int chunkY, int chunkZ) {
+        Column column = getChunkColumnAt(chunkX, chunkZ);
+
+        if (column == null || chunkY < 0 || chunkY >= column.getChunks().length) return null;
+
+        return column.getChunks()[chunkY];
+    }
+
     public WrappedBlockState getBlockAt(int x, int y, int z) {
-        long chunkColumnId = getChunkId(x >> 4, z >> 4);
-        Column column = chunkColumns.get(chunkColumnId);
-
-        if (column == null) return null;
-
-        BaseChunk chunk = column.getChunks()[y >> 4];
+        BaseChunk chunk = getChunkAt(x >> 4, y >> 4, z >> 4);
 
         if (chunk != null) {
             return chunk.get(player.getClientVersion(), x & 0xF, y & 0xF, z & 0xF);

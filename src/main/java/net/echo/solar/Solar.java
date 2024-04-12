@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.echo.solar.listeners.PacketListener;
+import net.echo.solar.listeners.bukkit.JoinListener;
 import net.echo.solar.manager.PlayerManager;
 import net.echo.solar.tasks.TransactionTask;
 import org.bukkit.Bukkit;
@@ -32,6 +33,7 @@ public final class Solar extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(new JoinListener(this), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new TransactionTask(this), 1L, 1L);
     }
 

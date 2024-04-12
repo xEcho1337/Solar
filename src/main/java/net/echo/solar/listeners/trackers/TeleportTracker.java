@@ -49,7 +49,9 @@ public class TeleportTracker extends AbstractCheck {
             Vector3d requiredSetback = player.getSetBackManager().getRequiredSetback();
 
             if (teleportQueue.isEmpty()) {
-                if (requiredSetback != null) player.getSetBackManager().teleport(requiredSetback);
+                if (requiredSetback != null) {
+                    player.getSetBackManager().teleport(requiredSetback);
+                }
 
                 return;
             }
