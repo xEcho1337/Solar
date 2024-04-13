@@ -29,7 +29,7 @@ public class LegacyFastBreak extends AbstractCheck {
         if (player.getClientVersion().isNewerThan(ClientVersion.V_1_8)) return;
 
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
-            if (player.getPacketData().isExemptIsTeleport() || targetBlock == null) return;
+            if (player.getPacketData().isTeleport() || targetBlock == null) return;
 
             balance += BreakUtils.getBlockDamage(player, targetBlock);
         }

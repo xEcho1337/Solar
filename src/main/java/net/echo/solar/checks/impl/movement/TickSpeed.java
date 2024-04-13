@@ -22,7 +22,7 @@ public class TickSpeed extends AbstractCheck {
     @Override
     public void onPacketReceive(PacketReceiveEvent event) {
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
-            if (player.getPacketData().isExemptIsTeleport() || player.getPacketData().isExemptIs117Duplicate()) return;
+            if (player.getPacketData().isTeleport() || player.getPacketData().isDuplicate()) return;
 
             nanosBalance += (long) 50e6;
 

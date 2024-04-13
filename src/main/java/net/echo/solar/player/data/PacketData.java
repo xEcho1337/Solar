@@ -2,22 +2,23 @@ package net.echo.solar.player.data;
 
 public class PacketData {
 
-    private boolean exemptIs117Duplicate;
-    private boolean exemptIsTeleport;
+    // 1.17 duplicates
+    private boolean isDuplicate;
+    private boolean isTeleport;
 
-    public boolean isExemptIs117Duplicate() {
-        return exemptIs117Duplicate;
+    public boolean isDuplicate() {
+        return isDuplicate;
     }
 
-    public void setExemptIs117Duplicate(boolean exemptIs117Duplicate) {
-        this.exemptIs117Duplicate = exemptIs117Duplicate;
+    public void setDuplicate(boolean duplicate) {
+        this.isDuplicate = duplicate;
     }
 
-    public boolean isExemptIsTeleport() {
-        return exemptIsTeleport;
+    public boolean isTeleport() {
+        return isTeleport;
     }
 
-    public void setExemptIsTeleport(boolean exemptIsTeleport) {
-        this.exemptIsTeleport = exemptIsTeleport;
+    public void setTeleport(boolean teleport) {
+        this.isTeleport = teleport;
     }
 }

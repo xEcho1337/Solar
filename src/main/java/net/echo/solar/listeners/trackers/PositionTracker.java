@@ -6,6 +6,7 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import net.echo.solar.checks.AbstractCheck;
+import net.echo.solar.common.boundingbox.BoundingBox;
 import net.echo.solar.player.SolarPlayer;
 
 public class PositionTracker extends AbstractCheck {
@@ -31,14 +32,14 @@ public class PositionTracker extends AbstractCheck {
 
             Vector3d delta = lastPosition == null ? null : lastPosition.subtract(location.getPosition());
 
-            player.getPacketData().setExemptIs117Duplicate(wrapper.hasPositionChanged() && wrapper.hasRotationChanged()
-                    && !player.getPacketData().isExemptIsTeleport()
+            player.getPacketData().setDuplicate(wrapper.hasPositionChanged() && wrapper.hasRotationChanged()
+                    && !player.getPacketData().isTeleport()
                     && onGround == lastOnGround
                     && player.getUser().getClientVersion().isNewerThanOrEquals(ClientVersion.V_1_17)
                     && delta != null
                     && delta.length() < player.getMoveThreshold());
 
-            if (wrapper.hasPositionChanged() && !player.getPacketData().isExemptIs117Duplicate()) {
+            if (wrapper.hasPositionChanged() && !player.getPacketData().isDuplicate()) {
                 lastPosition = position;
                 position = location.getPosition();
             }
@@ -52,7 +53,7 @@ public class PositionTracker extends AbstractCheck {
             }
 
             // Teleports should always have ground status to false in order to get fall damage
-            if (player.getPacketData().isExemptIsTeleport()) {
+            if (player.getPacketData().isTeleport()) {
                 wrapper.setOnGround(false);
             }
         }
@@ -88,5 +89,14 @@ public class PositionTracker extends AbstractCheck {
 
     public boolean isLastOnGround() {
         return lastOnGround;
+    }
+
+    public Vector3d getMotion() {
+        if (position == null || lastPosition == null) return new Vector3d();
+        return position.subtract(lastPosition);
+    }
+
+    public BoundingBox getBoundingBox(Vector3d position) {
+        return BoundingBox.fromPositionAndSize(position, 0.6, 1.8);
     }
 }

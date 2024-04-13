@@ -8,6 +8,7 @@ import net.echo.solar.checks.impl.misc.fastbreak.LegacyFastBreak;
 import net.echo.solar.checks.impl.misc.order.TeleportOrder;
 import net.echo.solar.checks.impl.misc.order.TransactionOrder;
 import net.echo.solar.checks.impl.movement.TickSpeed;
+import net.echo.solar.checks.impl.movement.simulation.Prediction;
 import net.echo.solar.listeners.trackers.PositionTracker;
 import net.echo.solar.listeners.trackers.TeleportTracker;
 import net.echo.solar.listeners.trackers.TransactionTracker;
@@ -26,16 +27,17 @@ public class CheckManager {
                 .put(TransactionOrder.class, new TransactionOrder(player))
                 .put(TeleportOrder.class, new TeleportOrder(player))
                 .put(TickSpeed.class, new TickSpeed(player))
+                // .put(Prediction.class, new Prediction(player))
                 .put(LegacyFastBreak.class, new LegacyFastBreak(player))
                 .put(OnePointSeventeenDuplicateFix.class, new OnePointSeventeenDuplicateFix(player))
                 .build();
 
         this.trackers = new ImmutableClassToInstanceMap.Builder<AbstractCheck>()
-                .put(WorldTracker.class, new WorldTracker(player))
-                .put(SetBackManager.class, new SetBackManager(player))
-                .put(TeleportTracker.class, new TeleportTracker(player))
-                .put(PositionTracker.class, new PositionTracker(player))
-                .put(TransactionTracker.class, new TransactionTracker(player))
+                .put(TransactionTracker.class, player.getTransactionTracker())
+                .put(SetBackManager.class, player.getSetBackManager())
+                .put(TeleportTracker.class, player.getTeleportTracker())
+                .put(PositionTracker.class, player.getPositionTracker())
+                .put(WorldTracker.class, player.getWorldTracker())
                 .build();
     }
 

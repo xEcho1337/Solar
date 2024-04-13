@@ -59,6 +59,7 @@ public final class WorldTracker extends AbstractCheck {
             if (wrapper.getAction() == DiggingAction.FINISHED_DIGGING) {
                 Vector3i position = wrapper.getBlockPosition();
 
+                // TODO: Count for blocks like beds
                 setBlockAt(position, WrappedBlockState.getDefaultState(StateTypes.AIR));
             }
         }
@@ -77,6 +78,7 @@ public final class WorldTracker extends AbstractCheck {
             WrappedBlockState blockAt = getBlockAt(position);
 
             if (state != null && (blockAt == null || blockAt.getType().isReplaceable())) {
+                // TODO: Better handling
                 if (ItemTags.BEDS.contains(itemStack.getType())) {
                     int yaw = MathUtil.floor((player.getPositionTracker().getYaw() * 4.0F / 360.0F) + 0.5D) & 3;
                     Direction direction = Direction.getByHorizontalIndex(yaw);

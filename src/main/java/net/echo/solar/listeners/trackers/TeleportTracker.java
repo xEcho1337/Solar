@@ -35,7 +35,7 @@ public class TeleportTracker extends AbstractCheck {
     @Override
     public void onPacketReceive(PacketReceiveEvent event) {
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
-            player.getPacketData().setExemptIsTeleport(false);
+            player.getPacketData().setTeleport(false);
 
             WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
@@ -67,11 +67,13 @@ public class TeleportTracker extends AbstractCheck {
             double actualZ = (data.isRelativeZ() ? lastPosition.getZ() : 0) + expected.getZ();
 
             if (position.equals(new Vector3d(actualX, actualY, actualZ))) {
-                player.getPacketData().setExemptIsTeleport(true);
+                player.getPacketData().setTeleport(true);
 
                 if (requiredSetback != null && requiredSetback.equals(position)) {
                     player.getSetBackManager().unblockMovement();
                 }
+
+                player.getPredictionEngine().resetMovement();
             } else if (data.getTransaction() > player.getTransactionTracker().getLastReceivedTransaction().get()) {
                 TeleportOrder order = player.getCheckManager().getCheck(TeleportOrder.class);
 

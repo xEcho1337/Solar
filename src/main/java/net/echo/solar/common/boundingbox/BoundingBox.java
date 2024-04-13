@@ -95,17 +95,11 @@ public class BoundingBox {
     }
 
     public BoundingBox offset(int x, int y, int z) {
-        this.minimum = this.minimum.add(x, y, z);
-        this.maximum = this.maximum.add(x, y, z);
-
-        return this;
+        return new BoundingBox(this.minimum.add(x, y, z), this.maximum.add(x, y, z));
     }
 
     public BoundingBox offset(double x, double y, double z) {
-        this.minimum = this.minimum.add(x, y, z);
-        this.maximum = this.maximum.add(x, y, z);
-
-        return this;
+        return new BoundingBox(this.minimum.add(x, y, z), this.maximum.add(x, y, z));
     }
 
     public BoundingBox offsetNew(double x, double y, double z) {

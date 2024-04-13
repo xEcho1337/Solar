@@ -13,6 +13,7 @@ import net.echo.solar.checks.AbstractCheck;
 import net.echo.solar.player.SolarPlayer;
 import net.echo.solar.player.data.TransactionData;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,8 @@ public class TransactionTracker extends AbstractCheck {
     // Idk maybe do something better for the callbacks
     private final AtomicInteger currentTransaction = new AtomicInteger(0);
     private final AtomicInteger lastReceivedTransaction = new AtomicInteger(0);
-    private final Map<TransactionData, List<Consumer<Integer>>> callbacks = new ConcurrentHashMap<>();
+    private final Map<Integer, List<Consumer<Integer>>> callbacks = new ConcurrentHashMap<>();
+    private final Map<Integer, TransactionData> sentTransactions = new ConcurrentHashMap<>();
     private long lastSentTransaction = System.currentTimeMillis();
 
     public TransactionTracker(SolarPlayer player) {
@@ -33,13 +35,11 @@ public class TransactionTracker extends AbstractCheck {
     }
 
     public void addCallback(int transaction, Consumer<Integer> callback) {
-        TransactionData data = getDataFromId(transaction);
-
-        List<Consumer<Integer>> tasks = callbacks.getOrDefault(data, new ArrayList<>());
+        List<Consumer<Integer>> tasks = callbacks.getOrDefault(transaction, new ArrayList<>());
 
         tasks.add(callback);
 
-        callbacks.put(data, tasks);
+        callbacks.put(transaction, tasks);
     }
 
     public void addNextCallback(Consumer<Integer> callback) {
@@ -47,13 +47,7 @@ public class TransactionTracker extends AbstractCheck {
     }
 
     public TransactionData getDataFromId(int transaction) {
-        for (TransactionData data : callbacks.keySet()) {
-            if (data.transaction() != transaction) continue;
-
-            return data;
-        }
-
-        return null;
+        return sentTransactions.get(transaction);
     }
 
     public void sendTransaction(Consumer<Integer> callback) {
@@ -64,7 +58,10 @@ public class TransactionTracker extends AbstractCheck {
 
         if (callback != null) tasks.add(callback);
 
-        callbacks.put(data, tasks);
+        data.setCallbacks(tasks);
+
+        callbacks.put(transaction, tasks);
+        sentTransactions.put(transaction, data);
 
         PacketWrapper<?> wrapper = new WrapperPlayServerWindowConfirmation(0, (short) transaction, false);
 
@@ -76,16 +73,13 @@ public class TransactionTracker extends AbstractCheck {
 
         lastSentTransaction = System.currentTimeMillis();
 
-        callbacks.forEach((transactionData, consumers) -> {
-            int id = transactionData.transaction();
-
+        callbacks.forEach((id, consumers) -> {
             if (id > transaction) {
                 consumers.forEach(consumer -> consumer.accept(id));
             }
         });
 
-        callbacks.entrySet().removeIf(entry -> entry.getKey().transaction() > transaction);
-
+        callbacks.entrySet().removeIf(entry -> entry.getKey() > transaction);
     }
 
     @Override
@@ -110,8 +104,12 @@ public class TransactionTracker extends AbstractCheck {
 
         lastReceivedTransaction.set(id);
 
-        callbacks.get(data).forEach(callback -> callback.accept(data.transaction()));
-        callbacks.remove(data);
+        if (callbacks.containsKey(id)) {
+            callbacks.get(id).forEach(callback -> callback.accept(data.transaction()));
+            callbacks.remove(id);
+        }
+
+        sentTransactions.remove(id);
     }
 
     public AtomicInteger getLastReceivedTransaction() {

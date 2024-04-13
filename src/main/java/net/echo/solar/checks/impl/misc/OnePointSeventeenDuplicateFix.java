@@ -17,7 +17,7 @@ public class OnePointSeventeenDuplicateFix extends AbstractCheck {
     public void onPacketReceive(PacketReceiveEvent event) {
         if (!WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) return;
 
-        if (!player.getPacketData().isExemptIs117Duplicate()) return;
+        if (!player.getPacketData().isDuplicate()) return;
 
         event.setCancelled(true);
     }

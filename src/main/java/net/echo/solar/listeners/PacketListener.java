@@ -11,7 +11,6 @@ public class PacketListener extends PacketListenerAbstract {
     private final Solar plugin;
 
     public PacketListener(Solar plugin) {
-        super(PacketListenerPriority.HIGHEST);
         this.plugin = plugin;
     }
 
