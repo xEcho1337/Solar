@@ -5,8 +5,10 @@ import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDisconnect;
 import net.echo.solar.common.boundingbox.BoundingBox;
-import net.echo.solar.listeners.trackers.PositionTracker;
-import net.echo.solar.listeners.trackers.TeleportTracker;
+import net.echo.solar.listeners.trackers.entity.AttributeTracker;
+import net.echo.solar.listeners.trackers.entity.EntityTracker;
+import net.echo.solar.listeners.trackers.position.PositionTracker;
+import net.echo.solar.listeners.trackers.position.TeleportTracker;
 import net.echo.solar.listeners.trackers.TransactionTracker;
 import net.echo.solar.listeners.trackers.WorldTracker;
 import net.echo.solar.manager.CheckManager;
@@ -26,6 +28,8 @@ public class SolarPlayer {
     private final TeleportTracker teleportTracker = new TeleportTracker(this);
     private final TransactionTracker transactionTracker = new TransactionTracker(this);
     private final WorldTracker worldTracker = new WorldTracker(this);
+    private final EntityTracker entityTracker = new EntityTracker(this);
+    private final AttributeTracker attributeTracker = new AttributeTracker(this);
     private final CheckManager checkManager = new CheckManager(this);
     private final PredictionEngine predictionEngine = new PredictionEngine(this);
     private final PacketData packetData = new PacketData();
@@ -34,18 +38,6 @@ public class SolarPlayer {
 
     public SolarPlayer(User user) {
         this.user = user;
-    }
-
-    public CheckManager getCheckManager() {
-        return checkManager;
-    }
-
-    public PacketData getPacketData() {
-        return packetData;
-    }
-
-    public PredictionEngine getPredictionEngine() {
-        return predictionEngine;
     }
 
     public TransactionTracker getTransactionTracker() {
@@ -66,6 +58,26 @@ public class SolarPlayer {
 
     public WorldTracker getWorldTracker() {
         return worldTracker;
+    }
+
+    public EntityTracker getEntityTracker() {
+        return entityTracker;
+    }
+
+    public AttributeTracker getAttributeTracker() {
+        return attributeTracker;
+    }
+
+    public CheckManager getCheckManager() {
+        return checkManager;
+    }
+
+    public PredictionEngine getPredictionEngine() {
+        return predictionEngine;
+    }
+
+    public PacketData getPacketData() {
+        return packetData;
     }
 
     public User getUser() {

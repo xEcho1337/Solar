@@ -51,7 +51,7 @@ public class LegacyFastBreak extends AbstractCheck {
                     balance = damage;
                 }
                 case FINISHED_DIGGING -> {
-                    // Prevents a fast break disabler
+                    // Prevents a fast break disabler - xEcho1337
                     if (balance == 0 || targetBlock == null) {
                         event.setCancelled(true);
                         updateBlock(wrapper.getBlockPosition());

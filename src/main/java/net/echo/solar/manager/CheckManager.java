@@ -9,8 +9,10 @@ import net.echo.solar.checks.impl.misc.order.TeleportOrder;
 import net.echo.solar.checks.impl.misc.order.TransactionOrder;
 import net.echo.solar.checks.impl.movement.TickSpeed;
 import net.echo.solar.checks.impl.movement.simulation.Prediction;
-import net.echo.solar.listeners.trackers.PositionTracker;
-import net.echo.solar.listeners.trackers.TeleportTracker;
+import net.echo.solar.listeners.trackers.entity.AttributeTracker;
+import net.echo.solar.listeners.trackers.entity.EntityTracker;
+import net.echo.solar.listeners.trackers.position.PositionTracker;
+import net.echo.solar.listeners.trackers.position.TeleportTracker;
 import net.echo.solar.listeners.trackers.TransactionTracker;
 import net.echo.solar.listeners.trackers.WorldTracker;
 import net.echo.solar.player.SolarPlayer;
@@ -27,7 +29,7 @@ public class CheckManager {
                 .put(TransactionOrder.class, new TransactionOrder(player))
                 .put(TeleportOrder.class, new TeleportOrder(player))
                 .put(TickSpeed.class, new TickSpeed(player))
-                // .put(Prediction.class, new Prediction(player))
+                .put(Prediction.class, new Prediction(player))
                 .put(LegacyFastBreak.class, new LegacyFastBreak(player))
                 .put(OnePointSeventeenDuplicateFix.class, new OnePointSeventeenDuplicateFix(player))
                 .build();
@@ -38,6 +40,8 @@ public class CheckManager {
                 .put(TeleportTracker.class, player.getTeleportTracker())
                 .put(PositionTracker.class, player.getPositionTracker())
                 .put(WorldTracker.class, player.getWorldTracker())
+                .put(EntityTracker.class, player.getEntityTracker())
+                .put(AttributeTracker.class, player.getAttributeTracker())
                 .build();
     }
 

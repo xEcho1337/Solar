@@ -1,4 +1,4 @@
-package net.echo.solar.listeners.trackers;
+package net.echo.solar.listeners.trackers.position;
 
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
@@ -52,7 +52,7 @@ public class PositionTracker extends AbstractCheck {
                 pitch = location.getPitch();
             }
 
-            // Teleports should always have ground status to false in order to get fall damage
+            // Teleports should always have ground status to false in order to get fall damage - xEcho1337
             if (player.getPacketData().isTeleport()) {
                 wrapper.setOnGround(false);
             }

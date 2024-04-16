@@ -2,6 +2,7 @@ package net.echo.solar.predictions;
 
 import com.github.retrooper.packetevents.util.Vector3d;
 import net.echo.solar.player.SolarPlayer;
+import net.echo.solar.predictions.possibility.MovePossibility;
 
 import java.util.ArrayList;
 import java.util.Comparator;

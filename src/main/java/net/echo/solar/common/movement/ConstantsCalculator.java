@@ -5,7 +5,7 @@ import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState
 import com.github.retrooper.packetevents.protocol.world.states.type.StateType;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateTypes;
 import com.github.retrooper.packetevents.util.Vector3i;
-import net.echo.solar.listeners.trackers.PositionTracker;
+import net.echo.solar.listeners.trackers.position.PositionTracker;
 import net.echo.solar.player.SolarPlayer;
 
 public class ConstantsCalculator {

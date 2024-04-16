@@ -22,24 +22,12 @@ public class Prediction extends AbstractCheck {
             WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
             PredictionResult result = player.getPredictionEngine().getResult();
 
-            /* Debug shit
-            Player user = player.getBukkitPlayer();
-            MovePossibility move = result.getClosestPossibility();
-
-            if (user != null) {
-                user.sendMessage("-- Prediction result! --");
-                user.sendMessage("Position: " + wrapper.hasPositionChanged());
-                user.sendMessage("C velocity: " + player.getPositionTracker().getMotion());
-                user.sendMessage("P velocity: " + move.getMotion());
-                user.sendMessage("Client on ground: " + wrapper.isOnGround());
-                user.sendMessage("Server on ground: " + move.isOnGround());
-                user.sendMessage("Difference: " + result.getOffset());
-                user.sendMessage("Forward: " + move.getForward());
-                user.sendMessage("Strafe: " + move.getStrafe());
-            }*/
-
-            // TODO: 0.03 handling, add a secondary position tracker using the motion from predictions
+            // TODO: 0.03 handling, add a secondary position tracker using the motion from predictions - xEcho1337
             if (!wrapper.hasPositionChanged()) return;
+
+            System.out.println(player.getPositionTracker().getMotion());
+            System.out.println(result.getClosestPossibility().getMotion());
+            System.out.print(result.getOffset());
 
             double offset = result.getOffset();
 

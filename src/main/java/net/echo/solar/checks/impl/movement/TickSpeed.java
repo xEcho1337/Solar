@@ -55,7 +55,7 @@ public class TickSpeed extends AbstractCheck {
 
         if (data == null) return;
 
-        // Without this, 1.9+ players could use timer whenever they wanted
+        // Without this, 1.9+ players could use timer whenever they wanted - xEcho1337
         nanosBalance = (long) Math.max(nanosBalance, data.timestamp() - 120e6);
     }
 }

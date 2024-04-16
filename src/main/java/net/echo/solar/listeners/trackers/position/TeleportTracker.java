@@ -1,4 +1,4 @@
-package net.echo.solar.listeners.trackers;
+package net.echo.solar.listeners.trackers.position;
 
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.event.PacketSendEvent;

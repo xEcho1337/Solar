@@ -2,10 +2,11 @@ package net.echo.solar.predictions.engine;
 
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.util.Vector3d;
-import net.echo.solar.listeners.trackers.PositionTracker;
+import net.echo.solar.listeners.trackers.position.PositionTracker;
 import net.echo.solar.player.SolarPlayer;
-import net.echo.solar.predictions.MovePossibility;
+import net.echo.solar.predictions.possibility.MovePossibility;
 import net.echo.solar.predictions.PredictionResult;
+import net.echo.solar.predictions.possibility.PossibilityType;
 
 public class PredictionEngine {
 
@@ -36,8 +37,17 @@ public class PredictionEngine {
 
         for (float forward = -1; forward <= 1; forward++) {
             for (float strafe = -1; strafe <= 1; strafe++) {
-                MovePossibility possibility = movePlayer(lastValidMovement, forward * 0.98f, strafe * 0.98f);
-                result.addMovePossibility(possibility);
+                PossibilityType[] possibilities = new PossibilityType[] { PossibilityType.NORMAL, PossibilityType.ITEM_SLOWDOWN };
+
+                for (PossibilityType type : possibilities) {
+                    MovePossibility possibility = new MovePossibility(player, lastValidMovement, forward * 0.98f, strafe * 0.98f, type);
+                    result.addMovePossibility(possibility);
+
+                    if (lastValidMovement.isOnGround()) {
+                        MovePossibility jumpPossibility = new MovePossibility(player, lastValidMovement, forward  * 0.98f, strafe * 0.98f, PossibilityType.JUMP, type);
+                        result.addMovePossibility(jumpPossibility);
+                    }
+                }
             }
         }
 
@@ -58,7 +68,12 @@ public class PredictionEngine {
         int chunkX = (int) position.getX() >> 4;
         int chunkZ = (int) position.getZ() >> 4;
 
-        motionY -= player.getWorldTracker().isChunkLoaded(chunkX, chunkZ) ? 0.08 : 0.1;
+        motionY -= 0.08;
+
+        if (!player.getWorldTracker().isChunkLoaded(chunkX, chunkZ)) {
+            motionY = -0.1;
+        }
+
         motionY *= 0.98f;
 
         if (Math.abs(motionX) < threshold) motionX = 0;
@@ -66,9 +81,5 @@ public class PredictionEngine {
         if (Math.abs(motionZ) < threshold) motionZ = 0;
 
         return new Vector3d(motionX, motionY, motionZ);
-    }
-
-    public MovePossibility movePlayer(MovePossibility movement, float forward, float strafe) {
-        return new MovePossibility(player, forward, strafe, movement);
     }
 }
