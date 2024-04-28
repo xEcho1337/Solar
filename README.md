@@ -1,6 +1,8 @@
 # Solar
 
-Solar is a simple anti cheat currently being in development.
+Solar is a simple anti cheat currently being in development, including a semi-completed prediction engine and powered by PacketEvents.
+
+Credits to Grim for minor code occurrencies.
 
 ## Contributing
 
