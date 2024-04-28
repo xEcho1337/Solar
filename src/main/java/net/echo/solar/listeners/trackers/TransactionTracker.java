@@ -66,7 +66,7 @@ public class TransactionTracker extends AbstractCheck {
         PacketWrapper<?> wrapper = new WrapperPlayServerWindowConfirmation(0, (short) transaction, false);
 
         if (PacketEvents.getAPI().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_17)) {
-            wrapper =  new WrapperPlayServerPing(transaction);
+            wrapper = new WrapperPlayServerPing(transaction);
         }
 
         player.getUser().sendPacket(wrapper);

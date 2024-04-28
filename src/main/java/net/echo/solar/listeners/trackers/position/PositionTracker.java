@@ -63,32 +63,65 @@ public class PositionTracker extends AbstractCheck {
         return position;
     }
 
+    public void setPosition(Vector3d position) {
+        setLastPosition(this.position);
+        this.position = position;
+    }
+
     public Vector3d getLastPosition() {
         return lastPosition;
+    }
+
+    public void setLastPosition(Vector3d lastPosition) {
+        this.lastPosition = lastPosition;
     }
 
     public float getYaw() {
         return yaw;
     }
 
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+
     public float getPitch() {
         return pitch;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
     }
 
     public float getLastYaw() {
         return lastYaw;
     }
 
+    public void setLastYaw(float lastYaw) {
+        this.lastYaw = lastYaw;
+    }
+
     public float getLastPitch() {
         return lastPitch;
+    }
+
+    public void setLastPitch(float lastPitch) {
+        this.lastPitch = lastPitch;
     }
 
     public boolean isOnGround() {
         return onGround;
     }
 
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+    }
+
     public boolean isLastOnGround() {
         return lastOnGround;
+    }
+
+    public void setLastOnGround(boolean lastOnGround) {
+        this.lastOnGround = lastOnGround;
     }
 
     public Vector3d getMotion() {

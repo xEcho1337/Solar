@@ -162,17 +162,18 @@ public final class WorldTracker extends AbstractCheck {
 
         if (column == null || chunkY < 0 || chunkY >= column.getChunks().length) return null;
 
+        System.out.println("Chunk at " + chunkX + ", " + chunkY + ", " + chunkZ + " is not null");
         return column.getChunks()[chunkY];
     }
 
     public WrappedBlockState getBlockAt(int x, int y, int z) {
         BaseChunk chunk = getChunkAt(x >> 4, y >> 4, z >> 4);
 
-        if (chunk != null) {
-            return chunk.get(player.getClientVersion(), x & 0xF, y & 0xF, z & 0xF);
+        if (chunk == null) {
+            chunk = createChunk();
         }
 
-        return null;
+        return chunk.get(player.getClientVersion(), x & 0xF, y & 0xF, z & 0xF);
     }
 
     public WrappedBlockState getBlockAt(Vector3i position) {
@@ -187,19 +188,19 @@ public final class WorldTracker extends AbstractCheck {
         long chunkColumnId = getChunkId(x >> 4, z >> 4);
         Column column = chunkColumns.get(chunkColumnId);
 
-        if (column != null) {
-            BaseChunk chunk = column.getChunks()[y >> 4];
+        if (column == null) return;
 
-            if (chunk == null) {
-                chunk = createChunk();
-                chunk.set(null, 0, 0, 0, 0);
-            }
+        BaseChunk chunk = column.getChunks()[y >> 4];
 
-            chunk.set(x & 0xF, y & 0xF, z & 0xF, state);
-
-            column.getChunks()[y >> 4] = chunk;
-            chunkColumns.put(chunkColumnId, column);
+        if (chunk == null) {
+            chunk = createChunk();
+            chunk.set(player.getClientVersion(), 0, 0, 0, 0);
         }
+
+        chunk.set(x & 0xF, y & 0xF, z & 0xF, state);
+
+        column.getChunks()[y >> 4] = chunk;
+        chunkColumns.put(chunkColumnId, column);
     }
 
     public void setBlockAt(Vector3i position, WrappedBlockState state) {

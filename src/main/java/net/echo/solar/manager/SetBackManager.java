@@ -45,6 +45,7 @@ public class SetBackManager extends AbstractCheck {
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
             if (requiredSetback == null) return;
 
+            System.out.println("cancelling cause of setback");
             event.setCancelled(true);
         }
     }
@@ -52,9 +53,8 @@ public class SetBackManager extends AbstractCheck {
     public void teleport(Vector3d location) {
         int teleportId = ThreadLocalRandom.current().nextInt() | Integer.MIN_VALUE;
 
-        // We combine flags to not change the yaw and pitch of the player, the formula is (mask | 8 | 16), we get 24
-        RelativeFlag flag = new RelativeFlag(24);
-
-        player.getUser().sendPacket(new WrapperPlayServerPlayerPositionAndLook(location.getX(), location.getY(), location.getZ(), 0, 0, flag.getMask(), teleportId, false));
+        // 24 does not change yaw & pitch, only movement
+        player.getUser().sendPacket(new WrapperPlayServerPlayerPositionAndLook(location.getX(), location.getY(), location.getZ(),
+                0, 0, (byte) 24, teleportId, false));
     }
 }
