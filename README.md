@@ -2,13 +2,7 @@
 
 (Incomplete) Prediction based anticheat that uses PacketEvents.
 
-## Contributing
-
-Pull requests are accepted, you can also message me on Telegram (@xEcho1337) if you want to actively contribute
-
-## Discord
-
-I also have a discord server: https://discord.com/invite/KND7pWunUX
+This repository will no longer be updated and it's marked as archieved since 16/06/24.
 
 ## Credits
 
